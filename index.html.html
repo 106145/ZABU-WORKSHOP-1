@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workshop Registration | ZABU Asia Engineering Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B3E;
+    --navy-mid: #162A5C;
+    --gold: #F5A623;
+    --gold-dark: #C47F10;
+    --white: #FFFFFF;
+    --off-white: #F7F8FA;
+    --light-gray: #EEF0F4;
+    --mid-gray: #8A93A8;
+    --text-body: #3A4260;
+    --green: #1a6b52;
+    --green-bg: rgba(26,107,82,0.12);
+    --red: #8B2020;
+    --red-bg: rgba(139,32,32,0.08);
+    --border: #DDE2ED;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Barlow', sans-serif; background: var(--off-white); color: var(--text-body); line-height: 1.6; }
+
+  /* NAV */
+  nav { background: var(--navy); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; border-bottom: 3px solid var(--gold); position: sticky; top: 0; z-index: 100; }
+  .nav-brand { display: flex; align-items: center; gap: 10px; }
+  .nav-logo { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 12px; color: var(--gold); }
+  .nav-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; color: var(--white); }
+  .nav-name span { color: var(--gold); }
+  .nav-back { font-size: 12px; color: rgba(255,255,255,0.55); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+  .nav-back:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero { background: var(--navy); padding: 3rem 2rem 2.5rem; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; border-radius: 50%; border: 50px solid rgba(245,166,35,0.07); }
+  .hero-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(245,166,35,0.15); border: 1px solid rgba(245,166,35,0.35); color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; margin-bottom: 1rem; }
+  .hero h1 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; color: var(--white); line-height: 1.1; margin-bottom: 0.8rem; }
+  .hero h1 span { color: var(--gold); }
+  .hero-sub { font-size: 0.95rem; color: rgba(255,255,255,0.65); max-width: 520px; margin: 0 auto; }
+
+  /* STATS STRIP */
+  .stats-strip { background: var(--gold); display: flex; justify-content: center; gap: 0; }
+  .stat-item { padding: 10px 28px; text-align: center; border-right: 1px solid rgba(13,27,62,0.15); }
+  .stat-item:last-child { border-right: none; }
+  .stat-val { font-family: 'Barlow Condensed', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--navy); line-height: 1; }
+  .stat-label { font-size: 10px; font-weight: 700; color: rgba(13,27,62,0.6); letter-spacing: 0.5px; text-transform: uppercase; }
+
+  /* MAIN LAYOUT */
+  .main { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; display: grid; grid-template-columns: 1fr 360px; gap: 2rem; align-items: start; }
+
+  /* FORM CARD */
+  .form-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: 0 4px 24px rgba(13,27,62,0.08); }
+  .form-card-header { background: var(--navy); padding: 1.4rem 1.8rem; }
+  .form-card-header h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+  .form-card-header p { font-size: 12px; color: rgba(255,255,255,0.55); }
+  .form-body { padding: 1.8rem; }
+
+  /* FORM ELEMENTS */
+  .form-group { margin-bottom: 1.2rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem; }
+  label { display: block; font-size: 12px; font-weight: 700; color: var(--navy); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 6px; }
+  label .required { color: var(--gold); margin-left: 2px; }
+  input, select, textarea {
+    width: 100%; padding: 10px 14px; border: 1.5px solid var(--border);
+    border-radius: 7px; font-family: 'Barlow', sans-serif; font-size: 14px;
+    color: var(--text-body); background: var(--white); transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none; appearance: none;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,166,35,0.12); }
+  input::placeholder, textarea::placeholder { color: #B0B8CC; }
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A93A8' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; cursor: pointer; }
+  textarea { resize: vertical; min-height: 90px; }
+
+  /* CHECKBOX GROUP */
+  .checkbox-group { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+  .checkbox-item { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
+  .checkbox-item input[type="checkbox"] { width: 18px; height: 18px; min-width: 18px; margin-top: 1px; accent-color: var(--gold); cursor: pointer; border-radius: 4px; }
+  .checkbox-item span { font-size: 13px; color: var(--text-body); line-height: 1.4; }
+
+  /* FEE SELECTOR */
+  .fee-options { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+  .fee-option { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+  .fee-option:hover { border-color: var(--gold); background: rgba(245,166,35,0.04); }
+  .fee-option input[type="radio"] { accent-color: var(--gold); width: 16px; height: 16px; }
+  .fee-option-text { flex: 1; }
+  .fee-option-name { font-size: 13px; font-weight: 700; color: var(--navy); }
+  .fee-option-desc { font-size: 11px; color: var(--mid-gray); }
+  .fee-option-price { font-family: 'Barlow Condensed', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--navy); }
+  .fee-option.early { border-color: rgba(245,166,35,0.4); background: rgba(245,166,35,0.04); }
+  .fee-option.early .fee-option-price { color: var(--gold-dark); }
+
+  /* DIVIDER */
+  .form-divider { border: none; border-top: 1px solid var(--light-gray); margin: 1.4rem 0; }
+
+  /* SUBMIT BUTTON */
+  .submit-btn { width: 100%; padding: 14px; background: var(--gold); color: var(--navy); font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 800; letter-spacing: 0.5px; border: none; border-radius: 8px; cursor: pointer; transition: background 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .submit-btn:hover { background: var(--gold-dark); color: var(--white); }
+  .submit-btn:active { transform: scale(0.99); }
+  .submit-note { font-size: 11px; color: var(--mid-gray); text-align: center; margin-top: 10px; }
+
+  /* SUCCESS / ERROR STATES */
+  .success-msg { display: none; background: var(--green-bg); border: 1.5px solid var(--green); border-radius: 10px; padding: 1.5rem; text-align: center; margin-top: 1rem; }
+  .success-msg h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--green); margin-bottom: 6px; }
+  .success-msg p { font-size: 13px; color: var(--text-body); }
+  .error-msg { display: none; background: var(--red-bg); border: 1.5px solid rgba(139,32,32,0.3); border-radius: 8px; padding: 1rem; text-align: center; margin-top: 1rem; font-size: 13px; color: var(--red); }
+
+  /* SIDEBAR */
+  .sidebar { display: flex; flex-direction: column; gap: 1.2rem; }
+
+  .info-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .info-card-header { background: var(--navy); padding: 12px 16px; }
+  .info-card-header h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); }
+  .info-card-body { padding: 14px 16px; }
+
+  .detail-item { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--light-gray); font-size: 13px; align-items: flex-start; }
+  .detail-item:last-child { border-bottom: none; }
+  .detail-icon { font-size: 15px; min-width: 20px; }
+  .detail-text strong { display: block; font-weight: 700; color: var(--navy); font-size: 12px; }
+  .detail-text span { color: var(--text-body); }
+
+  .topics-list { list-style: none; }
+  .topics-list li { font-size: 12px; color: var(--text-body); padding: 4px 0; border-bottom: 1px solid var(--light-gray); display: flex; gap: 8px; align-items: flex-start; }
+  .topics-list li:last-child { border-bottom: none; }
+  .topics-list li::before { content: '✓'; color: var(--gold); font-weight: 700; font-size: 11px; margin-top: 2px; flex-shrink: 0; }
+
+  .contact-card { background: var(--navy); border-radius: 12px; padding: 1.2rem 1.4rem; text-align: center; }
+  .contact-card p { font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 6px; }
+  .contact-card a { color: var(--gold); font-weight: 700; font-size: 14px; text-decoration: none; }
+  .contact-card a:hover { text-decoration: underline; }
+
+  .badge-early { display: inline-block; background: var(--gold); color: var(--navy); font-size: 10px; font-weight: 800; padding: 2px 10px; border-radius: 20px; letter-spacing: 0.5px; margin-left: 6px; vertical-align: middle; }
+
+  /* FOOTER */
+  .page-footer { background: var(--navy); text-align: center; padding: 1.5rem; border-top: 3px solid var(--gold); }
+  .page-footer p { font-size: 12px; color: rgba(255,255,255,0.45); }
+  .page-footer strong { color: var(--gold); }
+
+  @media (max-width: 720px) {
+    .main { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .stats-strip { flex-wrap: wrap; }
+    .stat-item { border-right: none; border-bottom: 1px solid rgba(13,27,62,0.1); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">ZABU</div>
+    <div class="nav-name">ZABU <span>ASIA</span> Engineering Academy</div>
+  </div>
+  <a href="https://106145.github.io/ZaBu_Engineering_Articles_Vol.1-/" class="nav-back">← Back to Articles</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">🚀 Pilot Batch — Limited Seats</div>
+  <h1>Workshop <span>Registration</span><br>Expression of Interest</h1>
+  <p class="hero-sub">Register your interest for the Professional Engineering Industry Preparation Workshop. We will contact you with confirmed dates, venue, and payment details.</p>
+</div>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stat-item"><div class="stat-val">40–50</div><div class="stat-label">Contact Hours</div></div>
+  <div class="stat-item"><div class="stat-val">12</div><div class="stat-label">Max Seats</div></div>
+  <div class="stat-item"><div class="stat-val">SGD 380</div><div class="stat-label">From</div></div>
+  <div class="stat-item"><div class="stat-val">25+</div><div class="stat-label">Yrs Experience</div></div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- REGISTRATION FORM -->
+  <div class="form-card">
+    <div class="form-card-header">
+      <h2>Registration Form</h2>
+      <p>All fields marked with * are required. We will confirm your seat within 2 working days.</p>
+    </div>
+    <div class="form-body">
+
+      <!-- ⚠️ REPLACE THE ACTION URL BELOW WITH YOUR FORMSPREE URL -->
+      <!-- Example: action="https://formspree.io/f/xyzabcde" -->
+      <form id="registrationForm" action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST">
+
+        <!-- Hidden field to identify form source -->
+        <input type="hidden" name="_subject" value="ZABU Workshop Registration — New Interest Submission">
+        <input type="hidden" name="_next" value="">
+
+        <!-- PERSONAL DETAILS -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">First Name <span class="required">*</span></label>
+            <input type="text" id="firstName" name="First Name" placeholder="Your first name" required>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name <span class="required">*</span></label>
+            <input type="text" id="lastName" name="Last Name" placeholder="Your last name" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address <span class="required">*</span></label>
+          <input type="email" id="email" name="Email" placeholder="your@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">WhatsApp / Mobile Number <span class="required">*</span></label>
+          <input type="tel" id="phone" name="Mobile Number" placeholder="+65 9XXX XXXX">
+        </div>
+
+        <hr class="form-divider">
+
+        <!-- PROFESSIONAL BACKGROUND -->
+        <div class="form-group">
+          <label for="currentRole">Current Role / Job Title <span class="required">*</span></label>
+          <input type="text" id="currentRole" name="Current Role" placeholder="e.g. Fresh Graduate, CAD Designer, Junior Engineer" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="education">Highest Qualification <span class="required">*</span></label>
+            <select id="education" name="Highest Qualification" required>
+              <option value="" disabled selected>Select qualification</option>
+              <option>Diploma (Polytechnic)</option>
+              <option>Bachelor's Degree</option>
+              <option>Master's Degree</option>
+              <option>Professional Certificate</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="experience">Years of Experience</label>
+            <select id="experience" name="Years of Experience">
+              <option value="" disabled selected>Select range</option>
+              <option>Fresh Graduate (0 years)</option>
+              <option>Less than 1 year</option>
+              <option>1–3 years</option>
+              <option>3–5 years</option>
+              <option>More than 5 years</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="nationality">Nationality</label>
+          <select id="nationality" name="Nationality">
+            <option value="" disabled selected>Select nationality</option>
+            <option>Singapore Citizen / PR</option>
+            <option>Myanmar</option>
+            <option>Malaysia</option>
+            <option>Philippines</option>
+            <option>India</option>
+            <option>China</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <hr class="form-divider">
+
+        <!-- INDUSTRY INTEREST -->
+        <div class="form-group">
+          <label>Industry Interest <span class="required">*</span> (Select all that apply)</label>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" name="Industry Interest" value="Semiconductor">
+              <span>💾 Semiconductor — Wafer fab, process facilities</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="Industry Interest" value="Pharmaceutical">
+              <span>💊 Pharmaceutical — GMP, cleanroom, sterile manufacturing</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="Industry Interest" value="Data Center">
+              <span>🖥️ Data Center — Cooling, MEP, critical infrastructure</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="Industry Interest" value="General HVAC & MEP">
+              <span>🔧 General HVAC & MEP Engineering</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="Industry Interest" value="All of the above">
+              <span>✅ All of the above</span>
+            </label>
+          </div>
+        </div>
+
+        <hr class="form-divider">
+
+        <!-- FEE CATEGORY -->
+        <div class="form-group">
+          <label>Preferred Fee Category <span class="required">*</span></label>
+          <div class="fee-options">
+            <label class="fee-option early">
+              <input type="radio" name="Fee Category" value="Early Bird — SGD 380" required>
+              <div class="fee-option-text">
+                <div class="fee-option-name">Early Bird <span class="badge-early">FIRST 10 SEATS</span></div>
+                <div class="fee-option-desc">Limited availability — first 10 confirmed registrations</div>
+              </div>
+              <div class="fee-option-price">SGD 380</div>
+            </label>
+            <label class="fee-option">
+              <input type="radio" name="Fee Category" value="Standard — SGD 550">
+              <div class="fee-option-text">
+                <div class="fee-option-name">Standard Rate</div>
+                <div class="fee-option-desc">Regular registration fee</div>
+              </div>
+              <div class="fee-option-price">SGD 550</div>
+            </label>
+            <label class="fee-option">
+              <input type="radio" name="Fee Category" value="Group — SGD 420 per person">
+              <div class="fee-option-text">
+                <div class="fee-option-name">Group Registration</div>
+                <div class="fee-option-desc">3 or more participants registering together</div>
+              </div>
+              <div class="fee-option-price">SGD 420</div>
+            </label>
+            <label class="fee-option">
+              <input type="radio" name="Fee Category" value="Myanmar Engineers Pilot — SGD 380">
+              <div class="fee-option-text">
+                <div class="fee-option-name">Myanmar Engineers — Pilot Batch</div>
+                <div class="fee-option-desc">Special rate for pilot batch Myanmar participants</div>
+              </div>
+              <div class="fee-option-price">SGD 380</div>
+            </label>
+          </div>
+        </div>
+
+        <hr class="form-divider">
+
+        <!-- SCHEDULE PREFERENCE -->
+        <div class="form-group">
+          <label>Preferred Schedule</label>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" name="Schedule Preference" value="Saturday sessions">
+              <span>📅 Saturday sessions (full day)</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="Schedule Preference" value="Evening weekday sessions">
+              <span>🌙 Evening weekday sessions</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="Schedule Preference" value="Either works for me">
+              <span>✅ Either works for me</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- HOW DID YOU HEAR -->
+        <div class="form-group">
+          <label for="source">How did you hear about this workshop?</label>
+          <select id="source" name="Heard From">
+            <option value="" disabled selected>Select source</option>
+            <option>Facebook</option>
+            <option>LinkedIn</option>
+            <option>WhatsApp / Telegram group</option>
+            <option>Friend or colleague</option>
+            <option>ZABU Asia website / articles</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <!-- MESSAGE -->
+        <div class="form-group">
+          <label for="message">Any Questions or Additional Information?</label>
+          <textarea id="message" name="Message" placeholder="Share anything you'd like us to know — your current situation, specific topics of interest, or any questions about the workshop..."></textarea>
+        </div>
+
+        <!-- CONSENT -->
+        <div class="form-group">
+          <label class="checkbox-item" style="margin-top: 4px;">
+            <input type="checkbox" name="Consent" value="Agreed" required>
+            <span style="font-size: 12px; color: var(--mid-gray);">I agree to be contacted by ZABU Asia Engineering Solutions regarding this workshop registration and related engineering programmes. <span style="color: var(--red);">*</span></span>
+          </label>
+        </div>
+
+        <!-- SUBMIT -->
+        <button type="submit" class="submit-btn">
+          ✉️ Submit Registration Interest
+        </button>
+        <p class="submit-note">Your information will be sent to contact@zabu-asia.com. We will reply within 2 working days.</p>
+
+        <!-- SUCCESS MESSAGE -->
+        <div class="success-msg" id="successMsg">
+          <h3>✅ Registration Received!</h3>
+          <p>Thank you for your interest! We will contact you at the email provided within <strong>2 working days</strong> to confirm your seat and provide payment details.</p>
+          <p style="margin-top: 8px; font-size: 12px;">Reference: ZABU Asia Engineering Academy — Pilot Batch</p>
+        </div>
+
+        <!-- ERROR MESSAGE -->
+        <div class="error-msg" id="errorMsg">
+          ⚠️ Something went wrong. Please try again or email us directly at <strong>contact@zabu-asia.com</strong>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- PROGRAMME DETAILS -->
+    <div class="info-card">
+      <div class="info-card-header"><h3>📋 Programme Details</h3></div>
+      <div class="info-card-body">
+        <div class="detail-item">
+          <div class="detail-icon">🏫</div>
+          <div class="detail-text">
+            <strong>Programme</strong>
+            <span>Professional Engineering Industry Preparation Workshop</span>
+          </div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon">📍</div>
+          <div class="detail-text">
+            <strong>Venue</strong>
+            <span>Singapore (To be confirmed)</span>
+          </div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon">🗓</div>
+          <div class="detail-text">
+            <strong>Schedule</strong>
+            <span>Weekend & Evening Sessions</span>
+          </div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon">⏱</div>
+          <div class="detail-text">
+            <strong>Total Hours</strong>
+            <span>Approximately 40–50 Contact Hours</span>
+          </div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon">👥</div>
+          <div class="detail-text">
+            <strong>Class Size</strong>
+            <span>Maximum 12 participants per intake</span>
+          </div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon">💰</div>
+          <div class="detail-text">
+            <strong>Fee</strong>
+            <span>From SGD 380 (Pilot Batch)</span>
+          </div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-icon">🎓</div>
+          <div class="detail-text">
+            <strong>Participation Letter</strong>
+            <span>Workshop Participation Letter included</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOPICS COVERED -->
+    <div class="info-card">
+      <div class="info-card-header"><h3>📚 Topics Covered</h3></div>
+      <div class="info-card-body">
+        <ul class="topics-list">
+          <li>Mission Critical Industry Overview</li>
+          <li>Engineering Fundamentals Refresher</li>
+          <li>HVAC & MEP Engineering Basics</li>
+          <li>Cleanroom Design & ISO Classification</li>
+          <li>Practical Engineering Calculations</li>
+          <li>Semiconductor Facility Systems</li>
+          <li>Pharmaceutical GMP HVAC</li>
+          <li>Data Center Cooling Systems</li>
+          <li>Singapore Engineering Standards</li>
+          <li>Career Development & Interview Prep</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- WHAT YOU RECEIVE -->
+    <div class="info-card">
+      <div class="info-card-header"><h3>🎁 What You Receive</h3></div>
+      <div class="info-card-body">
+        <ul class="topics-list">
+          <li>Comprehensive Course Notes</li>
+          <li>Engineering Quick Reference Guides</li>
+          <li>Sample Calculations & Templates</li>
+          <li>Workshop Participation Letter</li>
+          <li>Industry Knowledge Resources</li>
+          <li>Access to Free Online Articles</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="contact-card">
+      <p>Questions? Contact us directly</p>
+      <a href="mailto:contact@zabu-asia.com">📧 contact@zabu-asia.com</a>
+      <p style="margin-top: 10px; font-size: 11px;">"Bridging Academic Knowledge and<br>Real-World Engineering Practice"</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="page-footer">
+  <p>© 2025 <strong>ZABU Asia Engineering Academy</strong> · ZABU Asia Engineering Solutions · contact@zabu-asia.com · Singapore</p>
+</div>
+
+<script>
+  const form = document.getElementById('registrationForm');
+  const successMsg = document.getElementById('successMsg');
+  const errorMsg = document.getElementById('errorMsg');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = form.querySelector('.submit-btn');
+    btn.textContent = '⏳ Submitting...';
+    btn.disabled = true;
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        form.style.display = 'none';
+        successMsg.style.display = 'block';
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (err) {
+      btn.textContent = '✉️ Submit Registration Interest';
+      btn.disabled = false;
+      errorMsg.style.display = 'block';
+    }
+  });
+</script>
+
+</body>
+</html>
